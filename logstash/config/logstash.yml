@@ -1,0 +1,13 @@
+# Path where Logstash will store its data
+path.data: /usr/share/logstash/data
+
+# Path where Logstash will log its output
+path.logs: /usr/share/logstash/logs
+
+# HTTP API host and port
+http.host: "0.0.0.0"
+http.port: 9600
+
+# Enable or disable Logstash plugins and other features
+xpack.monitoring.enabled: false
+xpack.management.enabled: false

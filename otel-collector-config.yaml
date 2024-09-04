@@ -1,0 +1,46 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+      http:
+
+exporters:
+  otlp/elastic:
+    endpoint: "apm-server:8200"
+    tls:
+      insecure: true
+    headers:
+      Authorization: ""
+  logging:
+    verbosity: detailed
+
+processors:
+  batch:
+  memory_limiter:
+    check_interval: 5s
+    limit_mib: 512
+
+extensions:
+  health_check:
+    endpoint: ":13133"
+  pprof:
+    endpoint: :1888
+  zpages:
+    endpoint: :55679
+
+service:
+  extensions: [health_check, zpages, pprof]
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [batch, memory_limiter]
+      exporters: [otlp/elastic]
+    logs:
+      receivers: [otlp]
+      processors: [batch]
+      exporters: [otlp/elastic, logging]
+    metrics:
+      receivers: [otlp]
+      processors: [batch, memory_limiter]
+      exporters: [otlp/elastic]
+
