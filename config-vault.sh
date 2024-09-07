@@ -18,7 +18,7 @@ done
 echo "Vault is unsealed!"
 
 # Authenticate with Vault using the root token (update token if needed)
-export VAULT_TOKEN="root"
+export VAULT_TOKEN="replace-by-your-vault-token"
 export VAULT_ADDR='http://vault:8200'
 
 # Define the policy with full permissions
@@ -58,3 +58,4 @@ vault write -field=secret_id -f auth/approle/role/my-role/secret-id > /vault/cre
 vault token create -policy="my-policy"
 
 echo "Vault role and credentials have been set up."
+
